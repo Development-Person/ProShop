@@ -1,0 +1,22 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "MERN shopping cart app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Development-Person/ProShop.git"
+  },
+  "author": "Ibrahim Achkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Development-Person/ProShop/issues"
+  },
+  "homepage": "https://github.com/Development-Person/ProShop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

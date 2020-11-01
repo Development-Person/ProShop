@@ -1,3 +1,4 @@
 DRY Rating stars
 console.log(match.params.id) in ProductScreen.jsx
 ProductScreen: Turn Links into Buttons
+server.js: remove nodemon server when putting into production 
