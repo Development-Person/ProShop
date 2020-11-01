@@ -1,0 +1,3 @@
+DRY Rating stars
+console.log(match.params.id) in ProductScreen.jsx
+ProductScreen: Turn Links into Buttons
