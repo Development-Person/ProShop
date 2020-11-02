@@ -1,6 +1,9 @@
 const express = require('express');
 const { nextTick } = require('process');
+const dotenv = require('dotenv');
 const products = require('./data/products');
+
+dotenv.config();
 
 const app = express();
 
@@ -17,4 +20,10 @@ app.get('/api/products/:id', (req, res) => {
   res.json(product);
 });
 
-app.listen(5000, console.log('Server Running on Port 5000'));
+//dotenv allows you to do things like set ports, etc. Dotenv should be secret and not pushed to github etc.
+const PORT = process.env.PORT || 5000;
+
+app.listen(
+  PORT,
+  console.log(`Server running in ${process.env.NODE_ENV} mode on Port ${PORT}`)
+);
