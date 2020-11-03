@@ -2,4 +2,4 @@ DRY Rating stars
 console.log(match.params.id) in ProductScreen.jsx
 ProductScreen: Turn Links into Buttons
 server.js: remove nodemon server when putting into production 
-get list of all dependencies (dotenv, nodemon, concurrently, etc)
+get list of all dependencies (dotenv, nodemon, concurrently, bcrypt, etc)
