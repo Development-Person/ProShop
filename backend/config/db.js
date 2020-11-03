@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-/* async because when call connect or find MongoDB returns a promise*/
+/* this is how you connect to the MongoDB database. 
+async because when call connect or find MongoDB returns a promise
+MONGO URI is in .env and is the unique path to the proshop database*/
 
 const connectDB = async () => {
   try {

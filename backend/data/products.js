@@ -1,3 +1,5 @@
+/*we removed the _id for each product because MongoDB auto assigns a _id*/
+
 const products = [
   {
     name: 'Airpods Wireless Bluetooth Headphones',
