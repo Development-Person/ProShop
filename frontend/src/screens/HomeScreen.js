@@ -12,7 +12,7 @@ const HomeScreen = () => {
   2. useEffect fires off when HomeScreen.js loads. 
   3. {data} = res.data. 
   4. https://scotch.io/tutorials/asynchronous-javascript-using-async-await offers a good tutorial on why you would use async-await instead of a promise (which would chain a .then with a resultant arrow function): tldr it leads to cleaner code
-  5. The second argument of useEffect is for an array of dependencies. If a dependecny within the array changes it will trigger useEffect. If you don't have any dependencies then assign the second argument an empty array or else you will 
+  5. The second argument of useEffect is for an array of dependencies. If a dependency within the array changes it will trigger useEffect. If you don't have any dependencies then assign the second argument an empty array or else you will 
   get infinite get requests.
   */
   useEffect(() => {
