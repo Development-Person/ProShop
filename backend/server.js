@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
@@ -26,6 +27,18 @@ app.get('/api/products/:id', (req, res) => {
 */
 
 app.use('/api/products', productRoutes);
+
+/*Middleware = any function that makes use of information inside of a request. 
+app.use allows the middleware to fire using whatever information is within the specific request that was made. 
+For example, if we make a get request to all products, app.use could fire and we could find out information about the request (such as original URL origin) */
+
+/*
+ Error handling middleware.
+ To override the default error handler then create a function that takes in error first and then req, res, next. 
+*/
+app.use(notFound);
+
+app.use(errorHandler);
 
 //dotenv allows you to do things like set ports, etc. Dotenv should be secret and not pushed to github etc.
 const PORT = process.env.PORT || 5000;
