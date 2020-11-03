@@ -37,7 +37,6 @@ For example, if we make a get request to all products, app.use could fire and we
  To override the default error handler then create a function that takes in error first and then req, res, next. 
 */
 app.use(notFound);
-
 app.use(errorHandler);
 
 //dotenv allows you to do things like set ports, etc. Dotenv should be secret and not pushed to github etc.
