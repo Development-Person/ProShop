@@ -5,8 +5,10 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
-/* 1. Exact is included in the HomeScreen route because we don't want it to apply to anything but the root folder '/'*/
+/* 1. Exact is included in the HomeScreen route because we don't want it to apply to anything but the root folder '/'
+2. Cart has /:id? because we want id to be optional (so if you go to an empty cart you can get there)*/
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
         <Container>
           <Route path='/' component={HomeScreen} exact />
           <Route path='/product/:id' component={ProductScreen} />
+          <Route path='/cart/:id?' component={CartScreen} />
         </Container>
       </main>
       <Footer />
