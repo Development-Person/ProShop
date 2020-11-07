@@ -17,3 +17,11 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems)); //this saves the cart in local storage so that people can come back and buy later.
   //getstate gives us a JS object so we want to stringify it, because we can only save strings in local storage.
 };
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  dispatch({
+    type: constants.CART_REMOVE_ITEM,
+    payload: id,
+  });
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
