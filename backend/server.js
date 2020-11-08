@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -10,6 +11,8 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+app.use(express.json()); //allows us to accept json data in request bodies - this is used in userController to send login data as json
 
 app.get('/', (req, res) => {
   res.send('API is running...');
@@ -27,6 +30,7 @@ app.get('/api/products/:id', (req, res) => {
 */
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes); //userRoutes adds the /login to the api/users, which it is being hooked into.
 
 /*Middleware = any function that makes use of information inside of a request. 
 app.use allows the middleware to fire using whatever information is within the specific request that was made. 
