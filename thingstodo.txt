@@ -4,3 +4,5 @@ ProductScreen: Turn Links into Buttons
 server.js: remove nodemon server when putting into production 
 get list of all dependencies (dotenv, nodemon, concurrently, bcrypt, express-async-handler, redux/react-redux, redux-thunk, redux-devtools-extension etc)
 implement alternative cart number feature - https://www.udemy.com/course/mern-ecommerce/learn/lecture/22494084#questions/12760999
+change productConstants to constants and update all filename references 
+Learn more about what axios does
