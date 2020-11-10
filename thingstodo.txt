@@ -1,12 +1,9 @@
-DRY Rating stars
-console.log(match.params.id) in ProductScreen.jsx
-ProductScreen: Turn Links into Buttons
-server.js: remove nodemon server when putting into production 
-get list of all dependencies (dotenv, nodemon, concurrently, bcrypt, express-async-handler, redux/react-redux, redux-thunk, redux-devtools-extension etc)
-implement alternative cart number feature - https://www.udemy.com/course/mern-ecommerce/learn/lecture/22494084#questions/12760999
-change productConstants to constants and update all filename references 
-Learn more about what axios does
-Learn more about what .location does (react??) (LoginScreen.js)
-figure out why the double arrows in "export const login = (email, password) => async (dispatch) => {}" (userActions.js) 
-create a custom error handler to give succinct messages if someone fails to fill out all fields during registration
-get rid of "passwords do not match" if you have fixed that and they do but the user already exists. 
+//DRY Rating stars
+//ProductScreen: Turn Links into Buttons
+//implement alternative cart number feature - https://www.udemy.com/course/mern-ecommerce/learn/lecture/22494084#questions/12760999
+//change productConstants to allConstants and update all filename references 
+//Learn more about what axios does
+//Learn more about what .location does (react??) (LoginScreen.js)
+//figure out why the double arrows in "export const login = (email, password) => async (dispatch) => {}" (userActions.js) 
+//create a custom error handler to give succinct messages if someone fails to fill out all fields during registration
+//get rid of "passwords do not match" if you have fixed that and they do but the user already exists. 
