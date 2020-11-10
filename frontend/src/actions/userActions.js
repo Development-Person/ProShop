@@ -1,6 +1,7 @@
 import * as constants from '../constants/productConstants';
 import axios from 'axios';
 
+//ACTION FOR LOGGING IN
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -37,7 +38,47 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+//ACTION FOR LOGGING OUT
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: constants.USER_LOGOUT });
+};
+
+//ACTION FOR REGISTERING A NEW USER
+export const register = (name, email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: constants.USER_REGISTER_REQUEST,
+    });
+
+    const config = {
+      'Content-Type': 'application/json',
+    };
+
+    const { data } = await axios.post(
+      '/api/users',
+      { name, email, password },
+      config
+    );
+
+    dispatch({
+      type: constants.USER_REGISTER_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({
+      type: constants.USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: constants.USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
