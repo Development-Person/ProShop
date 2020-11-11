@@ -82,3 +82,41 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+//ACTION FOR BRINGING UP USER DETAILS
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  //we can get our user info from getState which has the token in it
+  try {
+    dispatch({
+      type: constants.USER_DETAILS_REQUEST,
+    });
+
+    //userInfo is created by userLoginReducer (in userReducers.js) which sets it to equal action.payload. Login in userActions.js dispatches USER.LOGIN.REQUEST which then leads to USER.LOGIN.SUCCESS with the payload.
+    const {
+      userLogin: { userInfo },
+    } = getState(); //we put brackets here because we are destructuring from a function
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    //id might be profile (when we call it from the profile screen we pass in profile) or it might be id
+    const { data } = await axios.get(`/api/users/${id}`, config);
+
+    dispatch({
+      type: constants.USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: constants.USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
