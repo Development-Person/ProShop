@@ -120,3 +120,46 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+//ACTION FOR UPDATING USER DETAILS
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constants.USER_UPDATE_PROFILE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/profile`, user, config);
+
+    dispatch({
+      type: constants.USER_UPDATE_PROFILE_SUCCESS,
+      payload: data,
+    });
+
+    //we dispatch this so that it logs back in straight away after updating the profile, so that the navbar updates with the new name (this is part of the fix)
+    dispatch({
+      type: constants.USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: constants.USER_UPDATE_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
