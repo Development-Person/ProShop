@@ -1,6 +1,9 @@
 import * as constants from '../constants/productConstants';
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (
+  state = { cartItems: [], shippingAddress: {} },
+  action
+) => {
   switch (action.type) {
     case constants.CART_ADD_ITEM:
       const item = action.payload; //the payload will contain a lot of information about the product. The Id in the payload will be called product, hence calling item.product will call the id of the product that's been sent with the payload.
@@ -25,6 +28,11 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return {
         ...state,
         cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
+    case constants.CART_SAVE_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
       };
     default:
       return state;
