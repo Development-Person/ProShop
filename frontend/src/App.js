@@ -11,6 +11,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 /* 1. Exact is included in the HomeScreen route because we don't want it to apply to anything but the root folder '/'
 2. Cart has /:id? because we want id to be optional (so if you go to an empty cart you can get there)*/
@@ -23,6 +24,7 @@ const App = () => {
         <Container>
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/payment' component={PaymentScreen} />
+          <Route path='/placeorder' component={PlaceOrderScreen} />
           <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} />
           <Route path='/profile' component={ProfileScreen} />
