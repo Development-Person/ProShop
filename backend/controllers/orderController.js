@@ -36,4 +36,23 @@ const addOrderItems = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrderItems };
+/*We are an order by its id*/
+//@desc     Get order by id
+//@route    POST/api/orders/:id
+//@access   Private
+const getOrderById = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
+  //If you take a look at the Order model schema, the first property is 'user' which references/links to the User model.
+  //The .populate() is saying to use that user model reference/link to populate the found order object with the user name and email.
+  if (order) {
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+export { addOrderItems, getOrderById };
