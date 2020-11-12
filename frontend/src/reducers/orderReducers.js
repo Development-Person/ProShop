@@ -21,3 +21,28 @@ export const orderCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const orderDetailsReducer = (
+  state = { loading: true, orderItems: [], shippingAddress: [] }, //loading set to true to avoid issues where it was trying to load the order before it went to true
+  action
+) => {
+  switch (action.type) {
+    case constants.ORDER_DETAILS_REQUEST:
+      return {
+        ...state, //this will keep us from getting errors when it loads
+        loading: true,
+      };
+    case constants.ORDER_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        order: action.payload,
+      };
+    case constants.ORDER_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
