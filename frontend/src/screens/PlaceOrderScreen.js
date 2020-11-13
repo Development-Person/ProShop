@@ -10,12 +10,12 @@ const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
+  //Calculate prices
+  //we use reduce. cartItems is an array. You take the accumulator, add the item price and multiply the item qty, and then set zero as the start of the accumulator
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  //Calculate prices
-  //we use reduce. cartItems is an array. You take the accumulator, add the item price and multiply the item qty, and then set zero as the start of the accumulator
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
