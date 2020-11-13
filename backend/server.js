@@ -34,6 +34,10 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes); //userRoutes adds the /login to the api/users, which it is being hooked into.
 app.use('/api/orders', orderRoutes);
 
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+);
+
 /*Middleware = any function that makes use of information inside of a request. 
 app.use allows the middleware to fire using whatever information is within the specific request that was made. 
 For example, if we make a get request to all products, app.use could fire and we could find out information about the request (such as original URL origin) */
