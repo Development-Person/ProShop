@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
+import * as constants from '../constants/productConstants';
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const PlaceOrderScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
+      dispatch({ type: constants.ORDER_CREATE_RESET }); //part of the fix to stop users from seeing each others orders
     }
     //eslint stops the console telling you to put order._id in as a dependency. We don't want to do that because the id has not yet been created at this point. The database creates the id.
     // eslint-disable-next-line

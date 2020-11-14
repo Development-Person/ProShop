@@ -39,6 +39,11 @@ export const cartReducer = (
         ...state,
         paymentMethod: action.payload,
       };
+    case constants.CART_CLEAR_ITEMS: //this corrects an issue where users could see each other's orders
+      return {
+        ...state,
+        cartItems: [],
+      };
     default:
       return state;
   }

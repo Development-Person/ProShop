@@ -17,6 +17,8 @@ export const orderCreateReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case constants.ORDER_CREATE_RESET: //this is part of the fix so that users don't see each others orders
+      return {};
     default:
       return state;
   }
@@ -65,6 +67,27 @@ export const orderPayReducer = (state = {}, action) => {
       };
     case constants.ORDER_PAY_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const orderListMyReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case constants.ORDER_LIST_MY_REQUEST:
+      return {
+        loading: true,
+      };
+    case constants.ORDER_LIST_MY_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload,
+      };
+    case constants.ORDER_LIST_MY_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

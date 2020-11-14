@@ -25,6 +25,12 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: constants.ORDER_CREATE_SUCCESS,
       payload: data,
     });
+    dispatch({
+      //this corrects an issue where the state would pick up all orders made, and present all orders to each user.
+      type: constants.CART_CLEAR_ITEMS,
+      payload: data,
+    });
+    localStorage.removeItem('cartItems');
   } catch (error) {
     dispatch({
       type: constants.ORDER_CREATE_FAIL,
@@ -104,6 +110,41 @@ export const payOrder = (orderId, paymentResult) => async (
   } catch (error) {
     dispatch({
       type: constants.ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//ACTION FOR A USER BRINGING UP THEIR ORDERS
+export const listMyOrders = () => async (dispatch, getState) => {
+  //don't need to pass anything in here because it knows who we are by our token
+  try {
+    dispatch({
+      type: constants.ORDER_LIST_MY_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/orders/myorders`, config);
+
+    dispatch({
+      type: constants.ORDER_LIST_MY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: constants.ORDER_LIST_MY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

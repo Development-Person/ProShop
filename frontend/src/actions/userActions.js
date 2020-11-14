@@ -41,7 +41,11 @@ export const login = (email, password) => async (dispatch) => {
 //ACTION FOR LOGGING OUT
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
+  localStorage.removeItem('cartItems'); //
+  localStorage.removeItem('shippingAddress'); // these additions clear the state so that users can't see orders from other users
+  localStorage.removeItem('paymentMethod'); //
   dispatch({ type: constants.USER_LOGOUT });
+  document.location.href = '/login'; //
 };
 
 //ACTION FOR REGISTERING A NEW USER
