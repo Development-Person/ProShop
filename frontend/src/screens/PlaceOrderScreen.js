@@ -34,7 +34,8 @@ const PlaceOrderScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
+      history.push(`/orders/${order._id}`);
+      dispatch({ type: constants.USER_DETAILS_RESET });
       dispatch({ type: constants.ORDER_CREATE_RESET }); //part of the fix to stop users from seeing each others orders
     }
     //eslint stops the console telling you to put order._id in as a dependency. We don't want to do that because the id has not yet been created at this point. The database creates the id.
