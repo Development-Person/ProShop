@@ -62,3 +62,17 @@ export const userUpdateProfileReducer = (state = {}, action) => {
       return state;
   }
 };
+
+//Get user list - admin only
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case constants.USER_LIST_REQUEST:
+      return { loading: true }; //return whatever is in the initial state
+    case constants.USER_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case constants.USER_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
