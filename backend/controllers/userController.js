@@ -127,6 +127,57 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Get user by id
+//@route    GET/api/users/:id
+//@access   Private/Admin
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+//@desc     Update user
+//@route    PUT/api/users/:id
+//@access   Private/Admin
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id); //not req.user._id because that's the logged in user
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin =
+      req.body.isAdmin === undefined ? user.isAdmin : req.body.isAdmin;
+    /* If req.body.isAdmin is undefined, we fall back to user.isAdmin. 
+      We want req.body.isAdmin to be true or false, so checking req.body.isAdmin === undefined as opposed to just req.body.isAdmin allows req.body.isAdmin to equal false if need be.
+      
+      1. You can't use user.isAdmin = req.body.isAdmin because this will throw an error if you don't pass a value to isAdmin on every request. 
+      The problem is that if we don't pass a value for isAdmin in our body, req.body.isAdmin won't be defined.
+      Since it's not defined, and user.isAdmin wasn't given a fallback value (like user.name and user.email), 
+      an error will get thrown that req.body.isAdmin is a required value we have to send each time we call the userUpdate function.
+
+      2. You can't use user.isAdmin = req.body.isAdmin || user.isAdmin because this won't allow an admin to change an admin to not an admin. 
+      If an amin wants to remove admin priveleges, req.body.isAdmin will be false.  Now, if req.body.isAdmin is false, the bad code will just default to user.isAdmin.  
+      user.isAdmin is going to be able to get assigned the value in req.body.isAdmin only if req.body.isAdmin is true.
+      However, if an admin wants to take away another user's admin rights, they'd be making req.body.isAdmin false, 
+      but when the code above is reached, user.isAdmin will stay true!*/
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   authUser,
   registerUser,
@@ -134,4 +185,6 @@ export {
   updateUserProfile,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 };
