@@ -5,10 +5,11 @@ import {
   registerUser,
   getUserProfile,
   updateUserProfile,
+  getUsers,
 } from '../controllers/userController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
-router.route('/').post(registerUser); // this is a '/' because user routes is added to the server as /app/users, so if we are trying to post to users we are already there, at root.
+router.route('/').post(registerUser).get(protect, admin, getUsers); // this is a '/' because user routes is added to the server as /app/users, so if we are trying to post to users we are already there, at root.
 router.post('/login', authUser); //we use post because we are only posting, so we don't have to user router.route().post. we use /login because it's being hooked to api/users.
 router
   .route('/profile')
