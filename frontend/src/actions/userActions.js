@@ -235,3 +235,36 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+//ACTION FOR UPDATING A USER - ADMIN ONLY
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constants.USER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+    dispatch({ type: constants.USER_UPDATE_SUCCESS });
+    dispatch({ type: constants.USER_DETAILS_SUCCESS, payload: data }); //we also want detail success and pass the data of the updated user into user details. trickle down the state.
+  } catch (error) {
+    dispatch({
+      type: constants.USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
