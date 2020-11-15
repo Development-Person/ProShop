@@ -42,9 +42,10 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   localStorage.removeItem('cartItems'); //
-  localStorage.removeItem('shippingAddress'); // these additions clear the state so that users can't see orders from other users
+  localStorage.removeItem('shippingAddress'); // these additions clear what is saved in localstorage so that users can't see orders from other users
   localStorage.removeItem('paymentMethod'); //
   dispatch({ type: constants.USER_LOGOUT });
+  dispatch({ type: constants.USER_LIST_RESET });
   document.location.href = '/login'; //
 };
 
