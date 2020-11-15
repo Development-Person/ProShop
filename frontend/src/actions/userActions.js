@@ -193,10 +193,41 @@ export const listUsers = () => async (dispatch, getState) => {
       payload: data,
     });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    /*localStorage.setItem('userInfo', JSON.stringify(data)); commented out because it was crashing the page after userDelete and then refresh of the page*/
   } catch (error) {
     dispatch({
       type: constants.USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//ACTION FOR DELETING A USER - ADMIN ONLY
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constants.USER_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/users/${id}`, config);
+
+    dispatch({ type: constants.USER_DELETE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: constants.USER_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

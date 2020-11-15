@@ -78,3 +78,17 @@ export const userListReducer = (state = { users: [] }, action) => {
       return state;
   }
 };
+
+//Delete a user - admin only
+export const userDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case constants.USER_DELETE_REQUEST:
+      return { loading: true };
+    case constants.USER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case constants.USER_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
