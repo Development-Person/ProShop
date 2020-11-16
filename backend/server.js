@@ -1,10 +1,12 @@
 import express from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -33,10 +35,14 @@ app.get('/api/products/:id', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes); //userRoutes adds the /login to the api/users, which it is being hooked into.
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
+
+const __dirname = path.resolve(); //path.resolve mimic __dirname which is only available in vanilla js (not when using es modules, which we are)
+app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); //this makes the uploads folder static so that it can get loaded in the browswer
 
 /*Middleware = any function that makes use of information inside of a request. 
 app.use allows the middleware to fire using whatever information is within the specific request that was made. 
