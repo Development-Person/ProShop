@@ -16,6 +16,7 @@ import OrderScreen from './screens/OrderScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import ProductListScreen from './screens/ProductListScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 
 /* 1. Exact is included in the HomeScreen route because we don't want it to apply to anything but the root folder '/'
 2. Cart has /:id? because we want id to be optional (so if you go to an empty cart you can get there)*/
@@ -38,6 +39,7 @@ const App = () => {
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
           <Route path='/admin/productlist' component={ProductListScreen} />
+          <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
           <Route path='/' component={HomeScreen} exact />
         </Container>
       </main>
