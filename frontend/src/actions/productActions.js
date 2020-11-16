@@ -74,3 +74,37 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+//ACTION FOR CREATING A PRODUCT
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: constants.PRODUCT_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/products`, {}, config); //empty object because we are making a post request but not adding any data (just creating a template product)
+
+    dispatch({
+      type: constants.PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: constants.PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
