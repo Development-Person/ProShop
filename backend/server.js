@@ -41,7 +41,7 @@ app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
-const __dirname = path.resolve(); //path.resolve mimic __dirname which is only available in vanilla js (not when using es modules, which we are)
+const __dirname = path.resolve(); //path.resolve mimics __dirname which is only available in vanilla js (not when using es modules, which we are)
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); //this makes the uploads folder static so that it can get loaded in the browswer
 
 /*Middleware = any function that makes use of information inside of a request. 
