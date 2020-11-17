@@ -1,8 +1,10 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'; //if you want to bring something in from the state it's useSelector, if you want to call an action it's useDispatch
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
+import SearchBox from './SearchBox';
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -14,6 +16,12 @@ const Header = () => {
     dispatch(logout());
   };
 
+  /* 
+We do this: <Route render={({ history }) => <SearchBox history={history} />} /> 
+Because: Because we embedded the SearchBox directly in the Header we don't have direct access to teh Router props like match and history. 
+So we bring in Route from react-router-dom, which gives us access to props.history. We pass that on to SearchBox which now has access to props.history. 
+*/
+
   return (
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -23,6 +31,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
