@@ -5,6 +5,7 @@ import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
+import ProductCarousel from '../components/ProductCarousel';
 import { listProducts } from '../actions/productActions';
 
 /* import axios from 'axios'; we did not need this here once we switched to redux since it's handled in the Actions*/
@@ -39,8 +40,10 @@ const HomeScreen = ({ match }) => {
     dispatch(listProducts(keyword, pageNumber)); //keyword lists products according to what is in the keyword (could be nothing or could be a random word)
   }, [dispatch, keyword, pageNumber]);
 
+  //we check for keyword in product carousel because we don't want the carousel showing up when doing a search. Keyword is an easy way to tell if there is a search happening.
   return (
     <>
+      {!keyword && <ProductCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
