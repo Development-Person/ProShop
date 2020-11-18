@@ -5,7 +5,12 @@ export const productListReducer = (state = { products: [] }, action) => {
     case constants.PRODUCT_DETAILS_REQUEST:
       return { loading: true, products: [] };
     case constants.PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: action.payload };
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      }; //the reason we need payloads for each of products, pages and page is because that is what is being returned by the productController.
     case constants.PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:

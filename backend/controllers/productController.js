@@ -6,6 +6,9 @@ import Product from '../models/productModel.js';
 //@route    GET/api/products
 //@access   Public
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 2;
+  const page = Number(req.query.pageNumber) || 1; //pageNumber is whatever is in the query (will be something like ?pageNumber=2)
+
   const keyword = req.query.keyword
     ? {
         //this is how we decide what to display based on the search keyword
@@ -15,8 +18,12 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       }
     : {}; //if no keyword, return empty object
-  const products = await Product.find({ ...keyword }); //again, could be something or nothing
-  res.json(products);
+
+  const count = await Product.countDocuments({ ...keyword }); //get the total count of products. spreading keyword means count is limited to those products
+  const products = await Product.find({ ...keyword }) //again, could be something or nothing
+    .limit(pageSize) //we limit by page size (if 2, 2 products).
+    .skip(pageSize * (page - 1)); //Skip makes sure we get the right products (for example, if we are on page 2 we get the next 2 products). Page 1 = 2*(1-1) = 0, so skip 0. Page 2 = 2*(2-1) = 2, so skip 2 products.
+  res.json({ products, page, pages: Math.ceil(count / pageSize) }); //if four products, count = 4 and pages would be 4 / 2 = 2 pages
 });
 
 //@desc     Fetch single product

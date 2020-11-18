@@ -5,10 +5,15 @@ import * as constants from '../constants/productConstants';
 you can think of this as the action creator, and then LIST REQUEST for example is the action
 we want to make an async request, so redux thunk allows us to add a function within a function, allowing us to pass in dispatch which then goes to the next function
 keyword is passed in as default empty string so that the searchbar is empty*/
-export const listProducts = (keyword = '') => async (dispatch) => {
+export const listProducts = (keyword = '', pageNumber = '') => async (
+  dispatch
+) => {
   try {
     dispatch({ type: constants.PRODUCT_LIST_REQUEST });
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`); //we now hit products but with a query string attached that points to the keyword (which could even be empty)
+    const { data } = await axios.get(
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    ); //we now hit products but with a query string attached that points to the keyword (which could even be empty) and the pageNumber. {Data} includes products, pages and page.
+    //So the reducer has to account for the extra data being passed through.
     dispatch({
       type: constants.PRODUCT_LIST_SUCCESS,
       payload: data,
