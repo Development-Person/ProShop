@@ -22,9 +22,9 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json()); //allows us to accept json data in request bodies - this is used in userController to send login data as json
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+/* not needed in production
+;
+*/
 
 /* these were used when we were fetching from the producst.js file. These are no longer used since we are fetching from mongoDB.
 app.get('/api/products', (req, res) => {
@@ -48,6 +48,19 @@ app.get('/api/config/paypal', (req, res) =>
 
 const __dirname = path.resolve(); //path.resolve mimics __dirname which is only available in vanilla js (not when using es modules, which we are)
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); //this makes the uploads folder static so that it can get loaded in the browswer
+
+//this is how we get ready for production.
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build'))); //setting front end build folder as our static folder
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  ); //take everything in this file that isn't one of the api routes and point to index.html in our build folder
+} else {
+  //this is what we do when we are not in production
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
+}
 
 /*Middleware = any function that makes use of information inside of a request. 
 app.use allows the middleware to fire using whatever information is within the specific request that was made. 
